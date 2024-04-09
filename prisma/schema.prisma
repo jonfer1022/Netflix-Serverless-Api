@@ -1,0 +1,118 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../src/generated/client"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id                String     @id @default(uuid())
+  phone             String     @db.VarChar(250)
+  fullName          String     @db.VarChar(250)
+  email             String?    @db.VarChar(250)
+  amountCodesSent   Int        @default(0)
+  notificationToken String?    @db.VarChar(250)
+  birthday          DateTime?
+  // gender                            Gender?
+  created_at        DateTime   @default(now())
+  updated_at        DateTime   @updatedAt
+  profiles          profiles[]
+
+  @@map("users")
+}
+
+model profiles {
+  id          String   @id @default(uuid())
+  profileName String   @db.VarChar(250)
+  linkIcon    String?  @db.VarChar(250)
+  user_id     String   @db.VarChar(250)
+  user        users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("profiles")
+}
+
+model movies {
+  id                String   @id @default(uuid())
+  name              String   @db.VarChar(250)
+  productionCompany String   @db.VarChar(250)
+  description       String?   @db.VarChar(250)
+  classification    Rating
+  gender            Gender[]
+  linkCover         String?  @db.VarChar(250)
+  linkMovie         String?  @db.VarChar(250)
+  linkTrailer       String?  @db.VarChar(250)
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+
+  @@map("movies")
+}
+
+model series {
+  id                String          @id @default(uuid())
+  name              String          @db.VarChar(250)
+  productionCompany String          @db.VarChar(250)
+  linkTrailer       String?         @db.VarChar(250)
+  linkCover         String?         @db.VarChar(250)
+  description       String?          @db.VarChar(250)
+  classification    Rating
+  gender            Gender[]
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @updatedAt
+  chapterSeries     chapterSeries[]
+
+  @@map("series")
+}
+
+model chapterSeries {
+  id          String   @id @default(uuid())
+  season      Int      @default(0)
+  chapter     Int      @default(0)
+  linkCover   String?  @db.VarChar(250)
+  linkChapter String?  @db.VarChar(250)
+  seriesId    String   @db.VarChar(250)
+  serie       series?  @relation(fields: [seriesId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("chapterSeries")
+}
+
+enum Rating {
+  P
+  PG
+  M
+  Mplus
+  R
+}
+
+enum Gender {
+  comedy
+  action
+  drama
+  scifi
+  romantic
+  fantasy
+  terror
+  documental
+  realityShow
+  standUp
+  talkShow
+  mistery
+  anime
+}
+
+model seedsExecuted {
+  id         String   @id @default(uuid())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("seeds_executed")
+}
+

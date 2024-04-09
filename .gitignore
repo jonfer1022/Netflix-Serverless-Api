@@ -1,0 +1,18 @@
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+
+# esbuild directories
+.esbuild
+.env
+.yarn
+prisma/migrations
+prisma/fakeData
+src/generated
+
+lib
+
+src/functions/dontUsed

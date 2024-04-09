@@ -1,0 +1,696 @@
+{
+  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "ConfirmPreSignUpInputModel": {
+        "type": "object",
+        "title": "ConfirmPreSignUpInputModel",
+        "properties": {
+          "phone": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "phone",
+          "code",
+          "password"
+        ]
+      },
+      "SignInInputModel": {
+        "type": "object",
+        "title": "SignInInputModel",
+        "properties": {
+          "phone": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "phone",
+          "password"
+        ]
+      },
+      "SignUpInputModel": {
+        "type": "object",
+        "title": "SignUpInputModel",
+        "properties": {
+          "phone": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "phone",
+          "password",
+          "fullName"
+        ]
+      },
+      "SuccessfulOperation": {
+        "type": "object",
+        "description": "Succesful operation",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "integer",
+            "default": 200
+          }
+        }
+      },
+      "BadRequest": {
+        "type": "object",
+        "description": "Bad Request",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          }
+        }
+      },
+      "DefaultErrorResponse": {
+        "type": "object",
+        "description": "Error by default",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          }
+        }
+      },
+      "LoginScheme": {
+        "type": "object",
+        "description": "Login succesful",
+        "properties": {
+          "AccessToken": {
+            "type": "string"
+          },
+          "RefreshToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "AccessToken",
+          "RefreshToken"
+        ]
+      },
+      "GetUserAccount": {
+        "type": "object",
+        "description": "Get users output model",
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "fullName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "link_icon": {
+                  "type": "string"
+                },
+                "amount_following": {
+                  "type": "number"
+                },
+                "amount_codes_sent": {
+                  "type": "number"
+                },
+                "notificationToken": {
+                  "type": "string"
+                },
+                "birthday": {
+                  "type": "string"
+                },
+                "gender": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ConfirmSignUpInputModel": {
+        "type": "object",
+        "title": "ConfirmPreSignUpInputModel",
+        "properties": {
+          "phone": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "phone",
+          "code",
+          "password"
+        ]
+      },
+      "Access-Control-Allow-Origin": {
+        "type": "string",
+        "default": "*",
+        "example": "*"
+      },
+      "AddNewProfileInputModel": {
+        "type": "object",
+        "title": "AddNewProfileInputModel",
+        "properties": {
+          "fullName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fullName"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "info": {
+    "title": "Netflix Serverless API",
+    "description": "Netflix Serverless OpenAPI endpoints",
+    "version": "0.0.1"
+  },
+  "paths": {
+    "/confirm-sign-up": {
+      "post": {
+        "summary": "Confirm sign-up endpoint",
+        "description": "This endpoint is used to confirm the code sended to user.",
+        "operationId": "confirmSignUp",
+        "parameters": [],
+        "tags": [
+          "Authentication"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmSignUpInputModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginScheme"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error message by default",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sign-in": {
+      "post": {
+        "summary": "Sign-in endpoint",
+        "description": "This endpoint is used for user authentication.",
+        "operationId": "signIn",
+        "parameters": [],
+        "tags": [
+          "Authentication"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInInputModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginScheme"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error message by default",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sign-up": {
+      "post": {
+        "summary": "Sign-up endpoint",
+        "description": "This endpoint is used for user registration.",
+        "operationId": "signUp",
+        "parameters": [],
+        "tags": [
+          "Authentication"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpInputModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginScheme"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error message by default",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profiles": {
+      "get": {
+        "summary": "Get Profiles endpoint",
+        "description": "This endpoint is used to get the profiles related with some user Id",
+        "operationId": "getProfiles",
+        "parameters": [],
+        "tags": [
+          "Profiles"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginScheme"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error message by default",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add new profile endpoint",
+        "description": "This endpoint is used to add new profile.",
+        "operationId": "newProfile",
+        "parameters": [],
+        "tags": [
+          "Authentication"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNewProfileInputModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginScheme"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error message by default",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/content": {
+      "get": {
+        "summary": "Get Main content endpoint",
+        "description": "This endpoint is used to get main content showed in the main home page",
+        "operationId": "getMainContent",
+        "parameters": [],
+        "tags": [
+          "Home"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginScheme"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error message by default",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "description": "The Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin). - [MDN Link](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)",
+                "schema": {
+                  "$ref": "#/components/schemas/Access-Control-Allow-Origin"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/dev",
+      "description": "Internal staging or development server for testing"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication"
+    },
+    {
+      "name": "Account Information"
+    },
+    {
+      "name": "Profile"
+    },
+    {
+      "name": "Manage Profiles"
+    }
+  ]
+}
